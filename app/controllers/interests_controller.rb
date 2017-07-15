@@ -1,0 +1,2 @@
+class InterestsController < SecretController
+end

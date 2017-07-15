@@ -55,10 +55,6 @@ GEM
       concurrent-ruby
       railties (>= 4.1)
     jwt (1.5.6)
-    knock (2.1.1)
-      bcrypt (~> 3.1)
-      jwt (~> 1.5)
-      rails (>= 4.2)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -110,6 +106,7 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     ruby_dep (1.5.0)
+    simple_command (0.0.9)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -138,12 +135,13 @@ DEPENDENCIES
   byebug
   faker
   jsonapi-resources
-  knock
+  jwt
   listen (>= 3.0.5, < 3.2)
   mysql2 (>= 0.3.18, < 0.5)
   puma (~> 3.7)
   rack-cors
   rails (~> 5.1.1)
+  simple_command
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
