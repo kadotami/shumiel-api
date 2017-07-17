@@ -1,7 +1,9 @@
 class Public::InterestsController < PublicApiController
     def index
         user_id = @current_user.id
-        interests = Interest.group(:name).sum(:value).where(user_id: user_id)
+        date = Date.today - 14
+        interests = Interest.where(["user_id = ? and created_at >= ?", user_id, date])
+                    .group(:name).sum(:value)
         render json: { Interest: interests }, status: 200
     end
 end
