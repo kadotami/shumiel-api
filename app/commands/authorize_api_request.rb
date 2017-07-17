@@ -1,27 +1,34 @@
 class AuthorizeApiRequest
   prepend SimpleCommand
 
-  def initialize(headers = {})
+  def initialize(headers = {}, type="")
     @headers = headers
+    @type = type
   end
 
   def call
-    user
-  end
-
-  def public_token_auth
-    if decoded_auth_token[:type] == "public"
-        return true
-    else
-        return false
+    if @type == "private"
+        private_user
+    elsif @type == "public"
+        public_user
     end
   end
 
   private
 
-  attr_reader :headers
+  attr_reader :headers, :type
 
-  def user
+  def private_user
+    if decoded_auth_token
+      @user ||= User.find(decoded_auth_token[:user_id]) 
+      if decoded_auth_token[:type] != "private"
+        @user = nil
+      end
+    end
+    @user || errors.add(:token, 'Invalid token') && nil
+  end
+
+  def public_user
     @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
     @user || errors.add(:token, 'Invalid token') && nil
   end

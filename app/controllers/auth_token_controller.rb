@@ -8,13 +8,4 @@ class AuthTokenController < ApplicationController
       render json: { error: command.errors }, status: :unauthorized
     end
   end
-
-  private
-
-  def user(email, pass)
-    user = User.find_by_email(email)
-    return user if user && user.authenticate(pass)
-
-    nil
-  end
 end

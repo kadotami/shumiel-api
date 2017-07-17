@@ -9,8 +9,8 @@ class AuthenticateUser
   def call
     if user
         return {
-            private_token: JsonWebToken.encode(user_id: user.id),
-            public_token: JsonWebToken.public_token(type: "public")
+            private_token: JsonWebToken.encode(user_id: user.id,type: "private"),
+            public_token: JsonWebToken.public_token(user_id: user.id)
         }
     end
   end
