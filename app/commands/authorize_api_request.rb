@@ -19,22 +19,21 @@ class AuthorizeApiRequest
   attr_reader :headers, :type
 
   def private_user
-    if decoded_auth_token
-      @user ||= User.find(decoded_auth_token[:user_id]) 
-      if decoded_auth_token[:type] != "private"
-        @user = nil
-      end
-    end
+    @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
     @user || errors.add(:token, 'Invalid token') && nil
   end
 
   def public_user
-    @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+    @user ||= User.find(decoded_public_token[:user_id]) if decoded_public_token
     @user || errors.add(:token, 'Invalid token') && nil
   end
 
   def decoded_auth_token
     @decoded_auth_token ||= JsonWebToken.decode(http_auth_header)
+  end
+
+  def decoded_public_token
+    @decoded_auth_token ||= JsonWebToken.public_decode(http_auth_header)
   end
 
   def http_auth_header
