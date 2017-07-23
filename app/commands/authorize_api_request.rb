@@ -19,12 +19,12 @@ class AuthorizeApiRequest
   attr_reader :headers, :type
 
   def private_user
-    @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+    @user ||= User.find_by_id(decoded_auth_token[:user_id]) if decoded_auth_token
     @user || errors.add(:token, 'Invalid token') && nil
   end
 
   def public_user
-    @user ||= User.find(decoded_public_token[:user_id]) if decoded_public_token
+    @user ||= User.find_by_id(decoded_public_token[:user_id]) if decoded_public_token
     @user || errors.add(:token, 'Invalid token') && nil
   end
 

@@ -6,7 +6,8 @@ class UsersController < ApplicationController
         user = User.new(email: email,password: password,password_confirmation: password_confirmation)
         if user.valid?
             user.save
-            render json: {token: "aaaaaaaaaaa"}, status: 200
+            command = AuthenticateUser.call(params[:email], params[:password])
+            render json: command.result, status: 200
         else
             render json: {error: user.errors.full_messages}, status: 400
         end
